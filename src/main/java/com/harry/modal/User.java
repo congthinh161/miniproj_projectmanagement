@@ -1,12 +1,13 @@
 package com.harry.modal;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Entity
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity(name = "account")
 @Data
 public class User {
     @Id
@@ -15,5 +16,9 @@ public class User {
     private String fullname;
     private String email;
     private String password;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "assignee" , cascade = CascadeType.ALL)
+    private List<Issue> assignedIssues = new ArrayList<>();
     private int projectSize;
 }
